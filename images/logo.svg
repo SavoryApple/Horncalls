@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Horncalls">
+  <defs>
+    <radialGradient id="bg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#1a2758"/>
+      <stop offset="100%" stop-color="#0B1330"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="39" fill="url(#bg)" stroke="#C7A968" stroke-width="1.5"/>
+  <circle cx="40" cy="40" r="33" fill="none" stroke="#E4C989" stroke-width="0.6" opacity="0.45"/>
+  <!-- stylized horn coil -->
+  <g fill="none" stroke="#E4C989" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 48c0-10 8-18 18-18s16 7 16 16c0 11-10 18-20 18-7 0-12-4-12-9 0-6 5-9 11-9 5 0 8 2.5 8 6.5" stroke-width="2.2"/>
+    <path d="M49 36c4-6 10-9 16-8" stroke-width="1.8"/>
+    <path d="M61 26l4 2.5-1.5 4.5" stroke-width="1.6"/>
+  </g>
+  <circle cx="46" cy="52.5" r="2.2" fill="#C7A968"/>
+</svg>
