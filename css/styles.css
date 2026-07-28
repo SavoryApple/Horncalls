@@ -445,42 +445,45 @@ section {
 
 /* ---------- BIOGRAPHY ---------- */
 .bio-layout {
-  display: block;
-}
-
-.bio-copy {
-  max-width: 70ch;
-  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.55fr);
+  gap: clamp(2rem, 4.5vw, 4.25rem);
+  align-items: start;
+  max-width: 1180px;
 }
 
 .bio-photo {
-  position: static !important;
-  top: auto !important;
-  float: none !important;
-  inset: auto !important;
-  display: block;
-  width: min(260px, 70%);
-  max-width: 260px;
-  margin: 0 0 1.75rem;
+  margin: 0;
+  width: 100%;
+  max-width: 420px;
 }
 
 .bio-photo img {
-  position: static !important;
-  top: auto !important;
   width: 100%;
   height: auto;
-  max-height: 320px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center top;
   display: block;
-  filter: grayscale(0.35) contrast(1.08) brightness(0.95);
+  filter: grayscale(0.28) contrast(1.06) brightness(0.96);
   border: 1px solid var(--hairline-strong);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.bio-copy {
+  min-width: 0;
+  max-width: 62ch;
 }
 
 .bio-copy p {
-  margin-bottom: 28px;
+  margin-bottom: 1.35em;
   color: var(--ivory-dim);
+  font-size: clamp(1.02rem, 0.35vw + 0.95rem, 1.12rem);
+  line-height: 1.75;
+}
+
+.bio-copy p.lead {
+  color: var(--ivory);
 }
 
 .bio-copy p.lead::first-letter {
@@ -494,7 +497,7 @@ section {
 }
 
 .bio-block {
-  margin-bottom: 44px;
+  margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
 }
 
 .bio-block:last-child {
@@ -1255,6 +1258,20 @@ nav a[aria-current="page"] {
 
 /* ---------- BREAKPOINTS ---------- */
 @media (max-width: 900px) {
+  .bio-layout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    max-width: 720px;
+  }
+
+  .bio-photo {
+    max-width: 340px;
+  }
+
+  .bio-copy {
+    max-width: none;
+  }
+
   .watch-grid {
     grid-template-columns: 1fr;
   }
@@ -1344,6 +1361,10 @@ nav a[aria-current="page"] {
 
   .hero-role {
     max-width: 28ch;
+  }
+
+  .bio-photo {
+    max-width: 280px;
   }
 
   .section-head::after {
