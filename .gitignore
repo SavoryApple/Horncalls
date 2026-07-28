@@ -9,5 +9,11 @@ desktop.ini
 *.swp
 *.swo
 
-# Local scratch
+# Local scratch / source assets not served
 material.md
+youtubelinks.md
+_optimize_images.py
+_gen_*.py
+images/alternates/
+images/**/*.png
+!images/apple-touch-icon.png
