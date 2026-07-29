@@ -42,21 +42,37 @@
     { id: "L4b3h7sFKN8", title: "Franz Strauss: Nocturno, Op. 7", uploaded: "20260531", views: 76, likes: 0, duration: 354 },
     { id: "N_df3LT1DB0", title: "Erik Satie: Gymnopédie No. 1", uploaded: "20260531", views: 145, likes: 0, duration: 197 },
     { id: "QNEVfezTtUM", title: "Maurice Ravel: Pavane pour une infante défunte", uploaded: "20260531", views: 84, likes: 0, duration: 352 },
-    { id: "Ws9e_YQHNvA", title: "Richard Strauss: Andante in C major, TrV 155", uploaded: "20260531", views: 146, likes: 0, duration: 271 }
+    { id: "Ws9e_YQHNvA", title: "Richard Strauss: Andante in C major, TrV 155", uploaded: "20260531", views: 146, likes: 0, duration: 271 },
+    { id: "-EEbYShBuV8", title: "Inside Chamber Music with Bruce Adolphe: Brahms' Horn Trio in E-flat Major", uploaded: "20160307", views: 7363, likes: 127, duration: 4243 }
   ];
 
   /* SoundCloud tracks from https://soundcloud.com/horncalls
-     uploaded = YYYYMMDD; plays/likes/duration from SoundCloud metadata snapshot */
+     uploaded = YYYYMMDD; plays/likes/duration from SoundCloud metadata snapshot
+     album / track / albumOrder = SoundCloud album membership (track = 1-based album order) */
   var audioTracks = [
-    { id: 2206646511, title: "Sergei Rachmaninoff: Vocalise, Op. 34 No. 14", url: "https://soundcloud.com/horncalls/sergei-rachmaninoff-vocalise-op-34-no-14-trevor-nuckols-horn-linda-avery-piano-4", uploaded: "20251105", plays: 13, likes: 0, duration: 369 },
-    { id: 2206646507, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/franz-strauss-nocturno-op-7-trevor-nuckols-horn-linda-avery-horn-live-8", uploaded: "20251105", plays: 4, likes: 0, duration: 305 },
-    { id: 2206646503, title: "Reinhold Glière: Romance, Op. 35 No. 6", url: "https://soundcloud.com/horncalls/reinhold-gliere-romance-op-35-no-6-trevor-nuckols-horn-linda-avery-piano-9", uploaded: "20251105", plays: 2, likes: 0, duration: 202 },
-    { id: 2206646499, title: "Bach / Gounod: Ave Maria", url: "https://soundcloud.com/horncalls/bach-gounod-ave-maria-trevor-nuckols-horn-linda-avery-piano-3", uploaded: "20251105", plays: 9685, likes: 118, duration: 316 },
-    { id: 2206646495, title: "Camille Saint-Saëns: Romance, Op. 36", url: "https://soundcloud.com/horncalls/camille-saint-saens-romance-op-36-trevor-nuckols-horn-linda-avery-piano-live-2", uploaded: "20251105", plays: 60, likes: 2, duration: 210 },
-    { id: 2206646491, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/richard-strauss-andante-in-c-major-trv-155-trevor-nuckols-horn-linda-avery-piano-live-6", uploaded: "20251105", plays: 18, likes: 2, duration: 249 },
-    { id: 2206646487, title: "Carl Reinecke: Notturno, Op. 112", url: "https://soundcloud.com/horncalls/carl-reinecke-notturno-op-112-trevor-nuckols-horn-linda-avery-piano-7", uploaded: "20251105", plays: 1, likes: 0, duration: 267 },
-    { id: 2206646483, title: "Camille Saint-Saëns: The Swan (Le Cygne)", url: "https://soundcloud.com/horncalls/camille-saint-saens-the-swan-le-cygne-trevor-nuckols-horn-linda-avery-piano-1", uploaded: "20251105", plays: 6, likes: 0, duration: 163 },
-    { id: 2206646479, title: "Reinhold Glière: Valse triste, Op. 35 No. 7", url: "https://soundcloud.com/horncalls/reinhold-gliere-valse-triste-op-35-no-7-trevor-nuckols-horn-linda-avery-piano-5", uploaded: "20251105", plays: 21, likes: 0, duration: 169 },
+    /* Pacific Harmony */
+    { id: 2369999594, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/straussandandantenuckolsavery", uploaded: "20260728", plays: 0, likes: 0, duration: 271, album: "Pacific Harmony", albumOrder: 1, track: 1 },
+    { id: 2369999591, title: "Franz Schubert: Ave Maria, D. 839", url: "https://soundcloud.com/horncalls/trevornuckolsavemariaschubert", uploaded: "20260728", plays: 0, likes: 0, duration: 389, album: "Pacific Harmony", albumOrder: 1, track: 2 },
+    { id: 2369999588, title: "Erik Satie: Gymnopédie No. 1", url: "https://soundcloud.com/horncalls/trevornuckolsgymnopedieeriksatie", uploaded: "20260728", plays: 0, likes: 0, duration: 197, album: "Pacific Harmony", albumOrder: 1, track: 3 },
+    { id: 2369999585, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/trevornuckolsfranzstraussnocturno", uploaded: "20260728", plays: 0, likes: 0, duration: 354, album: "Pacific Harmony", albumOrder: 1, track: 4 },
+    { id: 2369999597, title: "Maurice Ravel: Pavane pour une infante défunte", url: "https://soundcloud.com/horncalls/trevornuckolspavaneravel", uploaded: "20260728", plays: 0, likes: 0, duration: 352, album: "Pacific Harmony", albumOrder: 1, track: 5 },
+    { id: 2370016676, title: "Jules Massenet: Méditation from Thaïs", url: "https://soundcloud.com/horncalls/trevor-nuckols-thais-meditation", uploaded: "20260728", plays: 0, likes: 0, duration: 296, album: "Pacific Harmony", albumOrder: 1, track: 6 },
+    { id: 2370016673, title: "Richard Strauss: Morgen, Op. 27 No. 4", url: "https://soundcloud.com/horncalls/trevor-nuckols-strauss-morgen", uploaded: "20260728", plays: 0, likes: 0, duration: 202, album: "Pacific Harmony", albumOrder: 1, track: 7 },
+    { id: 2370016670, title: "Franz Schubert: Ständchen, D. 957", url: "https://soundcloud.com/horncalls/trevor-nuckols-schubert-standchen", uploaded: "20260728", plays: 0, likes: 0, duration: 250, album: "Pacific Harmony", albumOrder: 1, track: 8 },
+    /* LA Sessions */
+    { id: 2206646483, title: "Camille Saint-Saëns: The Swan (Le Cygne)", url: "https://soundcloud.com/horncalls/camille-saint-saens-the-swan-le-cygne-trevor-nuckols-horn-linda-avery-piano-1", uploaded: "20251104", plays: 6, likes: 0, duration: 163, album: "LA Sessions", albumOrder: 2, track: 1 },
+    { id: 2206646495, title: "Camille Saint-Saëns: Romance, Op. 36", url: "https://soundcloud.com/horncalls/camille-saint-saens-romance-op-36-trevor-nuckols-horn-linda-avery-piano-live-2", uploaded: "20251104", plays: 60, likes: 2, duration: 210, album: "LA Sessions", albumOrder: 2, track: 2 },
+    { id: 2206646499, title: "Bach / Gounod: Ave Maria", url: "https://soundcloud.com/horncalls/bach-gounod-ave-maria-trevor-nuckols-horn-linda-avery-piano", uploaded: "20251104", plays: 9685, likes: 118, duration: 316, album: "LA Sessions", albumOrder: 2, track: 3 },
+    { id: 2206646511, title: "Sergei Rachmaninoff: Vocalise, Op. 34 No. 14", url: "https://soundcloud.com/horncalls/sergei-rachmaninoff-vocalise-op-34-no-14-trevor-nuckols-horn-linda-avery-piano", uploaded: "20251104", plays: 13, likes: 0, duration: 369, album: "LA Sessions", albumOrder: 2, track: 4 },
+    { id: 2206646479, title: "Reinhold Glière: Valse triste, Op. 35 No. 7", url: "https://soundcloud.com/horncalls/reinhold-gliere-valse-triste-op-35-no-7-trevor-nuckols-horn-linda-avery-piano-5", uploaded: "20251104", plays: 21, likes: 0, duration: 169, album: "LA Sessions", albumOrder: 2, track: 5 },
+    { id: 2206646491, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/richard-strauss-andante-in-c-major-trv-155-trevor-nuckols-horn-linda-avery-piano-live-6", uploaded: "20251104", plays: 18, likes: 2, duration: 249, album: "LA Sessions", albumOrder: 2, track: 6 },
+    { id: 2206646487, title: "Carl Reinecke: Notturno, Op. 112", url: "https://soundcloud.com/horncalls/carl-reinecke-notturno-op-112-trevor-nuckols-horn-linda-avery-piano-7", uploaded: "20251104", plays: 1, likes: 0, duration: 267, album: "LA Sessions", albumOrder: 2, track: 7 },
+    { id: 2206646507, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/franz-strauss-nocturno-op-7-trevor-nuckols-horn-linda-avery-horn-live-8", uploaded: "20251104", plays: 4, likes: 0, duration: 305, album: "LA Sessions", albumOrder: 2, track: 8 },
+    { id: 2206646503, title: "Reinhold Glière: Romance, Op. 35 No. 6", url: "https://soundcloud.com/horncalls/reinhold-gliere-romance-op-35-no-6-trevor-nuckols-horn-linda-avery-piano-9", uploaded: "20251104", plays: 2, likes: 0, duration: 202, album: "LA Sessions", albumOrder: 2, track: 9 },
+    { id: 2370016667, title: "Jerry Goldsmith: Love Theme from Chinatown", url: "https://soundcloud.com/horncalls/trevor-nuckols-jerry-goldsmith-chinatown", uploaded: "20260728", plays: 0, likes: 0, duration: 133, album: "LA Sessions", albumOrder: 2, track: 10 },
+    { id: 2370016679, title: "Alexander Scriabin: Romance for horn and piano", url: "https://soundcloud.com/horncalls/trevor-nuckols-scriabin-romance", uploaded: "20260728", plays: 0, likes: 0, duration: 115, album: "LA Sessions", albumOrder: 2, track: 11 },
+    { id: 2370016682, title: "Reinhold Glière: Intermezzo, Op. 35 No. 11", url: "https://soundcloud.com/horncalls/trevornuckols-gliere-intermezzo", uploaded: "20260728", plays: 0, likes: 0, duration: 129, album: "LA Sessions", albumOrder: 2, track: 12 },
+    /* Other recordings */
     { id: 1795383964, title: "Edgard Varèse: Octandre", url: "https://soundcloud.com/horncalls/vareseoctandre", uploaded: "20240407", plays: 32, likes: 5, duration: 484 },
     { id: 1795369417, title: "Samuel Barber: Summer Music, Op. 31", url: "https://soundcloud.com/horncalls/barbersummermusic", uploaded: "20240407", plays: 6, likes: 10, duration: 770 },
     { id: 1795365436, title: "Mozart: Serenade in E-flat major, K. 375", url: "https://soundcloud.com/horncalls/mozartserenade375", uploaded: "20240407", plays: 6, likes: 0, duration: 1462 },
@@ -162,6 +178,10 @@
     var lastPositionMs = 0;
     var seekDragging = false;
 
+    function albumLabel(track) {
+      return track && track.album ? String(track.album) : "Other recordings";
+    }
+
     function sortTracks(mode) {
       var sorted = tracks.slice();
       if (mode === "newest") {
@@ -180,6 +200,18 @@
         sorted.sort(function (a, b) {
           return (b.likes || 0) - (a.likes || 0) || a.order - b.order;
         });
+      } else if (mode === "album") {
+        sorted.sort(function (a, b) {
+          var aAlbum = a.album ? 0 : 1;
+          var bAlbum = b.album ? 0 : 1;
+          if (aAlbum !== bAlbum) return aAlbum - bAlbum;
+          var aOrder = a.albumOrder != null ? a.albumOrder : 50;
+          var bOrder = b.albumOrder != null ? b.albumOrder : 50;
+          if (aOrder !== bOrder) return aOrder - bOrder;
+          var albumCmp = albumLabel(a).localeCompare(albumLabel(b));
+          if (albumCmp) return albumCmp;
+          return (a.track || 999) - (b.track || 999) || a.order - b.order;
+        });
       } else {
         sorted.sort(function (a, b) {
           return a.order - b.order;
@@ -197,8 +229,25 @@
       playlist = sortTracks(mode);
       list.innerHTML = "";
       rows = [];
+      var groupByAlbum = mode === "album";
+      var lastAlbum = null;
 
       playlist.forEach(function (track, index) {
+        if (groupByAlbum) {
+          var label = albumLabel(track);
+          if (label !== lastAlbum) {
+            lastAlbum = label;
+            var heading = document.createElement("li");
+            heading.className = "audio-album-heading";
+            heading.setAttribute("role", "presentation");
+            var headingText = document.createElement("h2");
+            headingText.className = "audio-album-title";
+            headingText.textContent = label;
+            heading.appendChild(headingText);
+            list.appendChild(heading);
+          }
+        }
+
         var item = document.createElement("li");
         item.className = "audio-item";
         item.dataset.index = String(index);
@@ -208,7 +257,8 @@
         title.className = "audio-item-title";
         var num = document.createElement("span");
         num.className = "audio-item-num";
-        num.textContent = (index + 1 < 10 ? "0" : "") + (index + 1) + ".";
+        var displayNum = groupByAlbum && track.track ? track.track : index + 1;
+        num.textContent = (displayNum < 10 ? "0" : "") + displayNum + ".";
         title.appendChild(num);
         title.appendChild(document.createTextNode(" " + track.title));
 
@@ -447,9 +497,9 @@
       sortSelect.addEventListener("change", function () {
         render(sortSelect.value);
       });
-      render(sortSelect.value || "newest");
+      render(sortSelect.value || "album");
     } else {
-      render("newest");
+      render("album");
     }
 
     ensureWidget(function () {});
