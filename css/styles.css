@@ -398,7 +398,7 @@ section {
 }
 
 #biography {
-  background: var(--panel-2);
+  background: #24305c;
   border-top: 1px solid var(--hairline);
 }
 
