@@ -97,9 +97,32 @@
     year.textContent = String(new Date().getFullYear());
   }
 
+  initLogoScrollTop();
   initLightbox();
   initWatchGallery(watchVideos);
   initAudioPlaylist(audioTracks);
+
+  function initLogoScrollTop() {
+    var logo = document.querySelector('a.nav-name-group[href="#top"]');
+    if (!logo) return;
+    logo.addEventListener("click", function (event) {
+      event.preventDefault();
+      var reduceMotion = false;
+      try {
+        reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      } catch (err) {
+        /* ignore */
+      }
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: reduceMotion ? "auto" : "smooth"
+      });
+      if (window.history && typeof window.history.replaceState === "function") {
+        window.history.replaceState(null, "", "#top");
+      }
+    });
+  }
 
   function formatAudioTime(seconds) {
     seconds = Math.max(0, Math.floor(seconds || 0));

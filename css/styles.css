@@ -171,6 +171,12 @@ summary:focus-visible {
   box-shadow: 0 0 0 1px var(--hairline-strong), 0 6px 24px rgba(0, 0, 0, 0.4);
 }
 
+#top {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
 /* ---------- HEADER / NAV ---------- */
 header {
   position: sticky;
