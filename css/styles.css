@@ -402,7 +402,7 @@ section {
   border-top: 1px solid var(--hairline);
 }
 
-#youtube {
+#videos {
   background: var(--panel);
   border-top: 1px solid var(--hairline-strong);
 }
@@ -447,26 +447,26 @@ section {
   padding: 0;
 }
 
-.page-soundcloud {
+.page-audio {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-.page-soundcloud main {
+.page-audio main {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.soundcloud-page {
+.audio-page {
   position: relative;
   padding: var(--section-y) 0;
   background: var(--section-alt);
   border-top: 1px solid var(--hairline);
 }
 
-.soundcloud-page .section-head h1 {
+.audio-page .section-head h1 {
   font-family: "Cormorant Garamond", serif;
   font-weight: 500;
   font-size: clamp(1.55rem, 3.4vw, 2.3rem);
