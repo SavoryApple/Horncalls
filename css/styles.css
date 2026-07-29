@@ -402,7 +402,7 @@ section {
   border-top: 1px solid var(--hairline);
 }
 
-#watch {
+#youtube {
   background: var(--panel);
   border-top: 1px solid var(--hairline-strong);
 }
@@ -445,6 +445,32 @@ section {
 
 .gallery-page .gallery-grid {
   padding: 0;
+}
+
+.page-soundcloud {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-soundcloud main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.soundcloud-page {
+  position: relative;
+  padding: var(--section-y) 0;
+  background: var(--section-alt);
+  border-top: 1px solid var(--hairline);
+}
+
+.soundcloud-page .section-head h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(1.55rem, 3.4vw, 2.3rem);
+  min-width: 0;
 }
 
 .section-head {
@@ -797,10 +823,6 @@ section {
   white-space: nowrap;
   border: 0;
   pointer-events: none;
-}
-
-#watch-panel-audio {
-  position: relative;
 }
 
 .audio-list {

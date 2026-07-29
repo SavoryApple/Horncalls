@@ -45,8 +45,7 @@
     { id: "Ws9e_YQHNvA", title: "Richard Strauss: Andante in C major, TrV 155", uploaded: "20260531", views: 146, likes: 0, duration: 271 }
   ];
 
-  /* SoundCloud track ids from https://soundcloud.com/horncalls
-     Titles are shortened for the on-site list; urls are the public permalinks. */
+  /* SoundCloud tracks from https://soundcloud.com/horncalls */
   var audioTracks = [
     { id: 2206646511, title: "Sergei Rachmaninoff: Vocalise, Op. 34 No. 14", url: "https://soundcloud.com/horncalls/sergei-rachmaninoff-vocalise-op-34-no-14-trevor-nuckols-horn-linda-avery-piano-4", duration: 369 },
     { id: 2206646507, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/franz-strauss-nocturno-op-7-trevor-nuckols-horn-linda-avery-horn-live-8", duration: 305 },
@@ -99,54 +98,8 @@
   }
 
   initLightbox();
-  initWatchTabs();
   initWatchGallery(watchVideos);
   initAudioPlaylist(audioTracks);
-
-  function initWatchTabs() {
-    var tabs = document.querySelectorAll("[data-watch-tab]");
-    var panels = document.querySelectorAll("[data-watch-panel]");
-    if (!tabs.length || !panels.length) return;
-
-    function activate(name) {
-      tabs.forEach(function (tab) {
-        var on = tab.getAttribute("data-watch-tab") === name;
-        tab.classList.toggle("is-active", on);
-        tab.setAttribute("aria-selected", on ? "true" : "false");
-        tab.tabIndex = on ? 0 : -1;
-      });
-      panels.forEach(function (panel) {
-        var on = panel.getAttribute("data-watch-panel") === name;
-        panel.hidden = !on;
-      });
-      if (name === "audio") {
-        document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
-      }
-      if (name === "video") {
-        document.dispatchEvent(new CustomEvent("horncalls:pause-audio"));
-      }
-    }
-
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        activate(tab.getAttribute("data-watch-tab"));
-      });
-      tab.addEventListener("keydown", function (event) {
-        var keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
-        if (keys.indexOf(event.key) === -1) return;
-        event.preventDefault();
-        var list = Array.prototype.slice.call(tabs);
-        var index = list.indexOf(tab);
-        var next = index;
-        if (event.key === "ArrowRight") next = (index + 1) % list.length;
-        if (event.key === "ArrowLeft") next = (index - 1 + list.length) % list.length;
-        if (event.key === "Home") next = 0;
-        if (event.key === "End") next = list.length - 1;
-        list[next].focus();
-        activate(list[next].getAttribute("data-watch-tab"));
-      });
-    });
-  }
 
   function formatAudioTime(seconds) {
     seconds = Math.max(0, Math.floor(seconds || 0));
