@@ -177,6 +177,131 @@
     var durationMs = 0;
     var lastPositionMs = 0;
     var seekDragging = false;
+    var playRequestId = 0;
+    var pendingPlayIndex = -1;
+    var pendingSeekMs = -1;
+    var progressSaveTimer = 0;
+    var switchingTrack = false;
+    var PROGRESS_KEY = "horncalls-audio-progress-v1";
+    var progressMap = loadProgressMap();
+
+    function loadProgressMap() {
+      try {
+        var raw = window.localStorage.getItem(PROGRESS_KEY);
+        if (!raw) return {};
+        var parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return {};
+        return parsed.positions && typeof parsed.positions === "object"
+          ? parsed.positions
+          : parsed;
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function persistProgressMap() {
+      try {
+        window.localStorage.setItem(
+          PROGRESS_KEY,
+          JSON.stringify({ positions: progressMap, updated: Date.now() })
+        );
+      } catch (err) {
+        /* ignore quota / private mode */
+      }
+    }
+
+    function getSavedProgress(trackId) {
+      var value = Number(progressMap[String(trackId)]);
+      return value > 0 ? value : 0;
+    }
+
+    function clearSavedProgress(trackId) {
+      if (!trackId && trackId !== 0) return;
+      var key = String(trackId);
+      if (!(key in progressMap)) return;
+      delete progressMap[key];
+      persistProgressMap();
+    }
+
+    function saveProgress(trackId, positionMs, force) {
+      if (!trackId && trackId !== 0) return;
+      var key = String(trackId);
+      var position = Math.max(0, Math.floor(Number(positionMs) || 0));
+      var track = null;
+      for (var i = 0; i < tracks.length; i += 1) {
+        if (String(tracks[i].id) === key) {
+          track = tracks[i];
+          break;
+        }
+      }
+      var total = track && track.duration ? track.duration * 1000 : 0;
+      if (total > 0 && (position >= total - 2500 || position / total >= 0.97)) {
+        clearSavedProgress(key);
+        return;
+      }
+      if (position < 1000) {
+        clearSavedProgress(key);
+        return;
+      }
+      if (!force && progressMap[key] && Math.abs(progressMap[key] - position) < 750) {
+        return;
+      }
+      progressMap[key] = position;
+      persistProgressMap();
+    }
+
+    function scheduleProgressSave(trackId, positionMs) {
+      if (progressSaveTimer) window.clearTimeout(progressSaveTimer);
+      progressSaveTimer = window.setTimeout(function () {
+        progressSaveTimer = 0;
+        saveProgress(trackId, positionMs, false);
+      }, 1200);
+    }
+
+    function getResumePosition(trackId, totalMs) {
+      var saved = getSavedProgress(trackId);
+      if (!saved) return 0;
+      if (totalMs > 0 && (saved >= totalMs - 2500 || saved / totalMs >= 0.97)) {
+        clearSavedProgress(trackId);
+        return 0;
+      }
+      return saved;
+    }
+
+    function saveActiveProgress(force) {
+      if (activeTrackId == null) return;
+      if (lastPositionMs > 0) {
+        saveProgress(activeTrackId, lastPositionMs, !!force);
+      }
+    }
+
+    function applySavedProgressToRow(index) {
+      var row = rows[index];
+      if (!row) return;
+      if (index === activeIndex && (playing || lastPositionMs > 0)) {
+        updateTimeDisplay(index, lastPositionMs, durationMs || (row.track.duration || 0) * 1000);
+        return;
+      }
+      var total = (row.track.duration || 0) * 1000;
+      var saved = getResumePosition(row.track.id, total);
+      updateTimeDisplay(index, saved, total);
+    }
+
+    function refreshPlayLabel(index) {
+      var row = rows[index];
+      if (!row) return;
+      var isOn = index === activeIndex && playing;
+      var total = (row.track.duration || 0) * 1000;
+      var saved = getResumePosition(row.track.id, total);
+      var label;
+      if (isOn) label = "Pause " + row.track.title;
+      else if (saved > 0 || (index === activeIndex && lastPositionMs > 1000)) {
+        label = "Resume " + row.track.title;
+      } else {
+        label = "Play " + row.track.title;
+      }
+      row.playBtn.setAttribute("aria-label", label);
+    }
 
     function albumLabel(track) {
       return track && track.album ? String(track.album) : "Other recordings";
@@ -307,9 +432,26 @@
           muteBtn: muteBtn
         });
 
-        playBtn.addEventListener("click", function () {
+        applySavedProgressToRow(index);
+        refreshPlayLabel(index);
+
+        var lastActivateAt = 0;
+        function activatePlay(event) {
+          if (event) event.preventDefault();
+          var now = Date.now();
+          if (now - lastActivateAt < 450) return;
+          lastActivateAt = now;
           toggleTrack(index);
-        });
+        }
+        playBtn.addEventListener("click", activatePlay);
+        playBtn.addEventListener(
+          "pointerup",
+          function (event) {
+            if (event.pointerType === "mouse") return;
+            activatePlay(event);
+          },
+          { passive: false }
+        );
 
         seek.addEventListener("pointerdown", function () {
           seekDragging = true;
@@ -343,9 +485,20 @@
 
     function commitSeek(index) {
       seekDragging = false;
-      if (index !== activeIndex || !widget || !widgetReady || !durationMs) return;
-      var ratio = Number(rows[index].seek.value) / 1000;
-      widget.seekTo(Math.floor(durationMs * ratio));
+      var row = rows[index];
+      if (!row) return;
+      var total =
+        index === activeIndex && durationMs
+          ? durationMs
+          : (row.track.duration || 0) * 1000;
+      if (!total) return;
+      var positionMs = Math.floor(total * (Number(row.seek.value) / 1000));
+      lastPositionMs = index === activeIndex ? positionMs : lastPositionMs;
+      updateTimeDisplay(index, positionMs, total);
+      saveProgress(row.track.id, positionMs, true);
+      refreshPlayLabel(index);
+      if (index !== activeIndex || !widget || !widgetReady) return;
+      widget.seekTo(positionMs);
     }
 
     function setRowPlaying(index, isPlaying) {
@@ -353,10 +506,7 @@
         var on = i === index && isPlaying;
         row.item.classList.toggle("is-playing", on);
         row.playBtn.innerHTML = on ? ICON_PAUSE : ICON_PLAY;
-        row.playBtn.setAttribute(
-          "aria-label",
-          (on ? "Pause " : "Play ") + row.track.title
-        );
+        refreshPlayLabel(i);
       });
     }
 
@@ -386,31 +536,58 @@
         widget.setVolume(muted ? 0 : 100);
       });
       widget.bind(window.SC.Widget.Events.PLAY, function () {
+        if (switchingTrack) return;
         playing = true;
+        pendingPlayIndex = -1;
         setRowLoading(activeIndex, false);
         setRowPlaying(activeIndex, true);
         document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
       });
       widget.bind(window.SC.Widget.Events.PAUSE, function () {
+        /* Ignore pause events fired while a new track is still loading. */
+        if (pendingPlayIndex >= 0 || switchingTrack) return;
         playing = false;
+        saveActiveProgress(true);
         setRowPlaying(activeIndex, false);
       });
       widget.bind(window.SC.Widget.Events.FINISH, function () {
+        if (switchingTrack) return;
         playing = false;
+        pendingPlayIndex = -1;
+        pendingSeekMs = -1;
         lastPositionMs = 0;
+        if (activeTrackId != null) clearSavedProgress(activeTrackId);
         setRowPlaying(activeIndex, false);
         if (activeIndex >= 0) {
           updateTimeDisplay(activeIndex, 0, durationMs);
           rows[activeIndex].seek.value = "0";
+          refreshPlayLabel(activeIndex);
         }
       });
       widget.bind(window.SC.Widget.Events.PLAY_PROGRESS, function (data) {
-        if (activeIndex < 0) return;
+        if (activeIndex < 0 || switchingTrack) return;
         if (data.relativePosition) {
           durationMs = data.currentPosition / data.relativePosition;
         }
+        if (pendingSeekMs >= 0) {
+          var target = pendingSeekMs;
+          pendingSeekMs = -1;
+          if (Math.abs((data.currentPosition || 0) - target) > 1200) {
+            try {
+              widget.seekTo(target);
+            } catch (err) {
+              /* ignore */
+            }
+            lastPositionMs = target;
+            updateTimeDisplay(activeIndex, target, durationMs);
+            return;
+          }
+        }
         lastPositionMs = data.currentPosition || 0;
         updateTimeDisplay(activeIndex, data.currentPosition, durationMs);
+        if (activeTrackId != null) {
+          scheduleProgressSave(activeTrackId, lastPositionMs);
+        }
       });
       return true;
     }
@@ -434,24 +611,68 @@
       var track = playlist[index];
       if (!track || !widget) return;
 
+      saveActiveProgress(true);
       document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
+
+      /* Stop the current sound before loading so the previous track
+         never bleeds into the next click. */
+      switchingTrack = true;
+      playing = false;
+      try {
+        widget.pause();
+      } catch (err) {
+        /* ignore */
+      }
+      try {
+        widget.setVolume(0);
+      } catch (err) {
+        /* ignore */
+      }
+
       activeIndex = index;
       activeTrackId = track.id;
-      lastPositionMs = 0;
+      pendingPlayIndex = index;
+      pendingSeekMs = -1;
+      var requestId = (playRequestId += 1);
+      var resumeAt = getResumePosition(track.id, (track.duration || 0) * 1000);
+      lastPositionMs = resumeAt;
       setRowLoading(index, true);
       setRowPlaying(index, false);
+      updateTimeDisplay(index, resumeAt, (track.duration || 0) * 1000);
 
       widget.load(track.url, {
         auto_play: true,
         callback: function () {
+          if (requestId !== playRequestId) return;
           widgetReady = true;
+          switchingTrack = false;
           setRowLoading(index, false);
           widget.getDuration(function (ms) {
+            if (requestId !== playRequestId) return;
             durationMs = ms || (track.duration || 0) * 1000;
-            updateTimeDisplay(index, 0, durationMs);
+            resumeAt = getResumePosition(track.id, durationMs);
+            lastPositionMs = resumeAt;
+            pendingSeekMs = resumeAt > 0 ? resumeAt : -1;
+            updateTimeDisplay(index, resumeAt, durationMs);
+            if (resumeAt > 0) {
+              try {
+                widget.seekTo(resumeAt);
+              } catch (err) {
+                /* ignore */
+              }
+            }
           });
           widget.setVolume(muted ? 0 : 100);
-          widget.play();
+          try {
+            widget.play();
+          } catch (err) {
+            /* ignore */
+          }
+          window.setTimeout(function () {
+            if (requestId === playRequestId && pendingPlayIndex === index) {
+              pendingPlayIndex = -1;
+            }
+          }, 1000);
         }
       });
     }
@@ -460,11 +681,26 @@
       ensureWidget(function () {
         if (!widget) return;
         if (index === activeIndex && playing) {
+          pendingPlayIndex = -1;
+          saveActiveProgress(true);
           widget.pause();
           return;
         }
         if (index === activeIndex && !playing) {
           document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
+          pendingPlayIndex = index;
+          var resumeAt = getResumePosition(
+            playlist[index].id,
+            durationMs || (playlist[index].duration || 0) * 1000
+          );
+          if (resumeAt > 0 && Math.abs(lastPositionMs - resumeAt) > 1200) {
+            pendingSeekMs = resumeAt;
+            try {
+              widget.seekTo(resumeAt);
+            } catch (err) {
+              /* ignore */
+            }
+          }
           widget.play();
           return;
         }
@@ -486,6 +722,7 @@
     document.addEventListener("horncalls:pause-audio", function () {
       if (widget && playing) {
         try {
+          saveActiveProgress(true);
           widget.pause();
         } catch (err) {
           /* ignore */
@@ -493,8 +730,17 @@
       }
     });
 
+    function flushProgress() {
+      saveActiveProgress(true);
+    }
+    window.addEventListener("pagehide", flushProgress);
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") flushProgress();
+    });
+
     if (sortSelect) {
       sortSelect.addEventListener("change", function () {
+        saveActiveProgress(true);
         render(sortSelect.value);
       });
       render(sortSelect.value || "album");

@@ -875,7 +875,11 @@ section {
 
 .audio-item {
   margin: 0;
-  padding: 0;
+  padding: clamp(14px, 2.2vw, 20px);
+  border: 1px solid var(--hairline);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    var(--panel-2);
 }
 
 .audio-item-title {
@@ -902,7 +906,7 @@ section {
   min-height: 48px;
   padding: 8px 12px;
   border: 1px solid var(--hairline);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent), var(--night);
+  background: rgba(11, 19, 48, 0.45);
 }
 
 .audio-play {
@@ -916,13 +920,21 @@ section {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
 
-.audio-play:hover,
 .audio-play:focus-visible {
   border-color: var(--gold);
   color: var(--gold-bright);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .audio-play:hover {
+    border-color: var(--gold);
+    color: var(--gold-bright);
+  }
 }
 
 .audio-item.is-playing .audio-play,
@@ -991,12 +1003,19 @@ section {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: color 0.2s ease;
 }
 
-.audio-mute:hover,
 .audio-mute:focus-visible {
   color: var(--gold-bright);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .audio-mute:hover {
+    color: var(--gold-bright);
+  }
 }
 
 .audio-mute svg {
@@ -1052,7 +1071,7 @@ section {
 }
 
 .watch-card {
-  background: var(--night);
+  background: #24305c;
   border: 1px solid var(--hairline);
   min-width: 0;
   overflow: visible;
