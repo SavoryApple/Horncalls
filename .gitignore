@@ -13,7 +13,14 @@ desktop.ini
 material.md
 youtubelinks.md
 _optimize_images.py
+_check_images.py
 _gen_*.py
 images/alternates/
+images/signal-*
 images/**/*.png
+images/**/*.webp
 !images/apple-touch-icon.png
+
+# Unused local source duplicates (site uses .jpg)
+images/bio-portrait-tuxedo-smiling.png
+images/hero-cream-suit-portrait.png
