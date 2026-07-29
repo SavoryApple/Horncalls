@@ -347,7 +347,9 @@
         });
       } else if (mode === "custom") {
         sorted.sort(function (a, b) {
-          return (a.featuredOrder || 1000) - (b.featuredOrder || 1000) || a.order - b.order;
+          var aFeat = a.featuredOrder != null ? a.featuredOrder : 1000;
+          var bFeat = b.featuredOrder != null ? b.featuredOrder : 1000;
+          return aFeat - bFeat || a.order - b.order;
         });
       } else {
         sorted.sort(function (a, b) {
