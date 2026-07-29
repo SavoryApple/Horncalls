@@ -48,7 +48,13 @@
 
   /* SoundCloud tracks from https://soundcloud.com/horncalls
      uploaded = YYYYMMDD; plays/likes/duration from SoundCloud metadata snapshot
-     album / track / albumOrder = SoundCloud album membership (track = 1-based album order) */
+     album / track / albumOrder = SoundCloud album membership (track = 1-based album order)
+     featuredOrder = custom homepage playlist priority (lower = earlier; unset = after featured) */
+  var audioFeaturedOrder = [
+    2370016676, /* Jules Massenet: Méditation from Thaïs */
+    2370016670, /* Franz Schubert: Ständchen, D. 957 */
+    2370016673 /* Richard Strauss: Morgen, Op. 27 No. 4 */
+  ];
   var audioTracks = [
     /* Pacific Harmony */
     { id: 2369999594, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/straussandandantenuckolsavery", uploaded: "20260728", plays: 0, likes: 0, duration: 271, album: "Pacific Harmony", albumOrder: 1, track: 1 },
@@ -87,6 +93,8 @@
   });
   audioTracks.forEach(function (track, index) {
     track.order = index;
+    var featuredIndex = audioFeaturedOrder.indexOf(track.id);
+    track.featuredOrder = featuredIndex >= 0 ? featuredIndex : 1000 + index;
   });
 
   var gunbarrel = document.getElementById("gunbarrel");
@@ -336,6 +344,10 @@
           var albumCmp = albumLabel(a).localeCompare(albumLabel(b));
           if (albumCmp) return albumCmp;
           return (a.track || 999) - (b.track || 999) || a.order - b.order;
+        });
+      } else if (mode === "custom") {
+        sorted.sort(function (a, b) {
+          return (a.featuredOrder || 1000) - (b.featuredOrder || 1000) || a.order - b.order;
         });
       } else {
         sorted.sort(function (a, b) {
@@ -743,9 +755,9 @@
         saveActiveProgress(true);
         render(sortSelect.value);
       });
-      render(sortSelect.value || "album");
+      render(sortSelect.value || "custom");
     } else {
-      render("album");
+      render("custom");
     }
 
     ensureWidget(function () {});
