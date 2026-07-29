@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0; url=/photos/">
   <link rel="canonical" href="https://horncalls.com/photos/">
-  <meta name="robots" content="noindex">
   <title>Photos — Trevor Nuckols</title>
   <script>
     (function () {
       var target = "/photos/";
       try {
-        if (location.protocol === "file:") target = "../photos/";
+        if (location.protocol === "file:") target = "photos/";
       } catch (e) {}
       location.replace(target);
     })();

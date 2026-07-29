@@ -407,29 +407,29 @@ section {
   border-top: 1px solid var(--hairline-strong);
 }
 
-#gallery,
-.gallery-page {
+#photos,
+.photos-page {
   background: var(--section-alt);
   border-top: 1px solid var(--hairline);
 }
 
-.page-gallery {
+.page-photos {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-.page-gallery main {
+.page-photos main {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.gallery-page {
+.photos-page {
   padding: var(--section-y) 0;
 }
 
-.gallery-page .section-head h1 {
+.photos-page .section-head h1 {
   font-family: "Cormorant Garamond", serif;
   font-weight: 500;
   font-size: clamp(1.55rem, 3.4vw, 2.3rem);
@@ -443,7 +443,7 @@ section {
   max-width: 42ch;
 }
 
-.gallery-page .gallery-grid {
+.photos-page .gallery-grid {
   padding: 0;
 }
 
