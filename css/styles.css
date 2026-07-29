@@ -171,7 +171,8 @@ summary:focus-visible {
   box-shadow: 0 0 0 1px var(--hairline-strong), 0 6px 24px rgba(0, 0, 0, 0.4);
 }
 
-#top {
+/* Homepage scroll target only — never put id="top" on <main> */
+div#top {
   height: 0;
   width: 0;
   overflow: hidden;
@@ -482,6 +483,11 @@ section {
 .audio-page .gallery-lede {
   max-width: none;
   white-space: nowrap;
+  margin-bottom: clamp(12px, 2vw, 18px);
+}
+
+.audio-page .watch-toolbar {
+  margin-bottom: clamp(18px, 3vw, 28px);
 }
 
 .section-head {

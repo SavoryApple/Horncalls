@@ -45,28 +45,32 @@
     { id: "Ws9e_YQHNvA", title: "Richard Strauss: Andante in C major, TrV 155", uploaded: "20260531", views: 146, likes: 0, duration: 271 }
   ];
 
-  /* SoundCloud tracks from https://soundcloud.com/horncalls */
+  /* SoundCloud tracks from https://soundcloud.com/horncalls
+     uploaded = YYYYMMDD; plays/likes/duration from SoundCloud metadata snapshot */
   var audioTracks = [
-    { id: 2206646511, title: "Sergei Rachmaninoff: Vocalise, Op. 34 No. 14", url: "https://soundcloud.com/horncalls/sergei-rachmaninoff-vocalise-op-34-no-14-trevor-nuckols-horn-linda-avery-piano-4", duration: 369 },
-    { id: 2206646507, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/franz-strauss-nocturno-op-7-trevor-nuckols-horn-linda-avery-horn-live-8", duration: 305 },
-    { id: 2206646503, title: "Reinhold Glière: Romance, Op. 35 No. 6", url: "https://soundcloud.com/horncalls/reinhold-gliere-romance-op-35-no-6-trevor-nuckols-horn-linda-avery-piano-9", duration: 202 },
-    { id: 2206646499, title: "Bach / Gounod: Ave Maria", url: "https://soundcloud.com/horncalls/bach-gounod-ave-maria-trevor-nuckols-horn-linda-avery-piano-3", duration: 316 },
-    { id: 2206646495, title: "Camille Saint-Saëns: Romance, Op. 36", url: "https://soundcloud.com/horncalls/camille-saint-saens-romance-op-36-trevor-nuckols-horn-linda-avery-piano-live-2", duration: 210 },
-    { id: 2206646491, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/richard-strauss-andante-in-c-major-trv-155-trevor-nuckols-horn-linda-avery-piano-live-6", duration: 249 },
-    { id: 2206646487, title: "Carl Reinecke: Notturno, Op. 112", url: "https://soundcloud.com/horncalls/carl-reinecke-notturno-op-112-trevor-nuckols-horn-linda-avery-piano-7", duration: 267 },
-    { id: 2206646483, title: "Camille Saint-Saëns: The Swan (Le Cygne)", url: "https://soundcloud.com/horncalls/camille-saint-saens-the-swan-le-cygne-trevor-nuckols-horn-linda-avery-piano-1", duration: 163 },
-    { id: 2206646479, title: "Reinhold Glière: Valse triste, Op. 35 No. 7", url: "https://soundcloud.com/horncalls/reinhold-gliere-valse-triste-op-35-no-7-trevor-nuckols-horn-linda-avery-piano-5", duration: 169 },
-    { id: 1795383964, title: "Edgard Varèse: Octandre", url: "https://soundcloud.com/horncalls/vareseoctandre", duration: 484 },
-    { id: 1795369417, title: "Samuel Barber: Summer Music, Op. 31", url: "https://soundcloud.com/horncalls/barbersummermusic", duration: 770 },
-    { id: 1795365436, title: "Mozart: Serenade in E-flat major, K. 375", url: "https://soundcloud.com/horncalls/mozartserenade375", duration: 1462 },
-    { id: 1794749227, title: "Michael Kamen: Theme from Band of Brothers", url: "https://soundcloud.com/horncalls/bandofbrothers", duration: 141 },
-    { id: 1794736618, title: "Andrew Lloyd Webber: Requiem — Pie Jesu", url: "https://soundcloud.com/horncalls/andrewlloydwebberpiejesu", duration: 132 },
-    { id: 1794672628, title: "Oliver Knussen: Horn Concerto, Op. 28 (NY Premiere)", url: "https://soundcloud.com/horncalls/knussenhornconcerto", duration: 796 },
-    { id: 1794631855, title: "Nicolas-Charles Bochsa: Fantasie, Op. 72 — Andante sostenuto", url: "https://soundcloud.com/horncalls/bochsafantasie", duration: 382 }
+    { id: 2206646511, title: "Sergei Rachmaninoff: Vocalise, Op. 34 No. 14", url: "https://soundcloud.com/horncalls/sergei-rachmaninoff-vocalise-op-34-no-14-trevor-nuckols-horn-linda-avery-piano-4", uploaded: "20251105", plays: 13, likes: 0, duration: 369 },
+    { id: 2206646507, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/franz-strauss-nocturno-op-7-trevor-nuckols-horn-linda-avery-horn-live-8", uploaded: "20251105", plays: 4, likes: 0, duration: 305 },
+    { id: 2206646503, title: "Reinhold Glière: Romance, Op. 35 No. 6", url: "https://soundcloud.com/horncalls/reinhold-gliere-romance-op-35-no-6-trevor-nuckols-horn-linda-avery-piano-9", uploaded: "20251105", plays: 2, likes: 0, duration: 202 },
+    { id: 2206646499, title: "Bach / Gounod: Ave Maria", url: "https://soundcloud.com/horncalls/bach-gounod-ave-maria-trevor-nuckols-horn-linda-avery-piano-3", uploaded: "20251105", plays: 9685, likes: 118, duration: 316 },
+    { id: 2206646495, title: "Camille Saint-Saëns: Romance, Op. 36", url: "https://soundcloud.com/horncalls/camille-saint-saens-romance-op-36-trevor-nuckols-horn-linda-avery-piano-live-2", uploaded: "20251105", plays: 60, likes: 2, duration: 210 },
+    { id: 2206646491, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/richard-strauss-andante-in-c-major-trv-155-trevor-nuckols-horn-linda-avery-piano-live-6", uploaded: "20251105", plays: 18, likes: 2, duration: 249 },
+    { id: 2206646487, title: "Carl Reinecke: Notturno, Op. 112", url: "https://soundcloud.com/horncalls/carl-reinecke-notturno-op-112-trevor-nuckols-horn-linda-avery-piano-7", uploaded: "20251105", plays: 1, likes: 0, duration: 267 },
+    { id: 2206646483, title: "Camille Saint-Saëns: The Swan (Le Cygne)", url: "https://soundcloud.com/horncalls/camille-saint-saens-the-swan-le-cygne-trevor-nuckols-horn-linda-avery-piano-1", uploaded: "20251105", plays: 6, likes: 0, duration: 163 },
+    { id: 2206646479, title: "Reinhold Glière: Valse triste, Op. 35 No. 7", url: "https://soundcloud.com/horncalls/reinhold-gliere-valse-triste-op-35-no-7-trevor-nuckols-horn-linda-avery-piano-5", uploaded: "20251105", plays: 21, likes: 0, duration: 169 },
+    { id: 1795383964, title: "Edgard Varèse: Octandre", url: "https://soundcloud.com/horncalls/vareseoctandre", uploaded: "20240407", plays: 32, likes: 5, duration: 484 },
+    { id: 1795369417, title: "Samuel Barber: Summer Music, Op. 31", url: "https://soundcloud.com/horncalls/barbersummermusic", uploaded: "20240407", plays: 6, likes: 10, duration: 770 },
+    { id: 1795365436, title: "Mozart: Serenade in E-flat major, K. 375", url: "https://soundcloud.com/horncalls/mozartserenade375", uploaded: "20240407", plays: 6, likes: 0, duration: 1462 },
+    { id: 1794749227, title: "Michael Kamen: Theme from Band of Brothers", url: "https://soundcloud.com/horncalls/bandofbrothers", uploaded: "20240406", plays: 7, likes: 2, duration: 141 },
+    { id: 1794736618, title: "Andrew Lloyd Webber: Requiem — Pie Jesu", url: "https://soundcloud.com/horncalls/andrewlloydwebberpiejesu", uploaded: "20240406", plays: 5, likes: 1, duration: 132 },
+    { id: 1794672628, title: "Oliver Knussen: Horn Concerto, Op. 28 (NY Premiere)", url: "https://soundcloud.com/horncalls/knussenhornconcerto", uploaded: "20240406", plays: 12, likes: 1, duration: 796 },
+    { id: 1794631855, title: "Nicolas-Charles Bochsa: Fantasie, Op. 72 — Andante sostenuto", url: "https://soundcloud.com/horncalls/bochsafantasie", uploaded: "20240406", plays: 3, likes: 0, duration: 382 }
   ];
 
   watchVideos.forEach(function (video, index) {
     video.order = index;
+  });
+  audioTracks.forEach(function (track, index) {
+    track.order = index;
   });
 
   var gunbarrel = document.getElementById("gunbarrel");
@@ -134,7 +138,8 @@
   function initAudioPlaylist(tracks) {
     var list = document.getElementById("audio-list");
     var iframe = document.getElementById("sc-widget");
-    if (!list || !iframe || !tracks.length) return;
+    var sortSelect = document.getElementById("audio-sort");
+    if (!list || !tracks.length) return;
 
     var ICON_PLAY =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
@@ -145,90 +150,146 @@
     var ICON_MUTE =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 12a3.5 3.5 0 0 0-1.8-3.1v2.3l1.7 1.7c.07-.29.1-.59.1-.9zm3.0-7.2v2.1c1.2 1.3 1.9 3 1.9 5.1s-.7 3.8-1.9 5.1v2.1a7.5 7.5 0 0 0 0-14.4zM4.3 3 3 4.3 7.7 9H3v4h4l5 5v-6.7l4.7 4.7c-.5.4-1.1.7-1.7.9v2.1c1 .3 2.1.4 3.2.2l2.5 2.5 1.3-1.3L4.3 3zM14 3.7v2.1l-1.9 1.9V3.7L14 3.7z"/></svg>';
 
+    var playlist = [];
     var rows = [];
     var widget = null;
     var widgetReady = false;
     var activeIndex = -1;
+    var activeTrackId = null;
     var playing = false;
     var muted = false;
     var durationMs = 0;
+    var lastPositionMs = 0;
     var seekDragging = false;
 
-    tracks.forEach(function (track, index) {
-      var item = document.createElement("li");
-      item.className = "audio-item";
-      item.dataset.index = String(index);
+    function sortTracks(mode) {
+      var sorted = tracks.slice();
+      if (mode === "newest") {
+        sorted.sort(function (a, b) {
+          return String(b.uploaded || "").localeCompare(String(a.uploaded || "")) || a.order - b.order;
+        });
+      } else if (mode === "oldest") {
+        sorted.sort(function (a, b) {
+          return String(a.uploaded || "").localeCompare(String(b.uploaded || "")) || a.order - b.order;
+        });
+      } else if (mode === "plays") {
+        sorted.sort(function (a, b) {
+          return (b.plays || 0) - (a.plays || 0) || a.order - b.order;
+        });
+      } else if (mode === "likes") {
+        sorted.sort(function (a, b) {
+          return (b.likes || 0) - (a.likes || 0) || a.order - b.order;
+        });
+      } else {
+        sorted.sort(function (a, b) {
+          return a.order - b.order;
+        });
+      }
+      return sorted;
+    }
 
-      var title = document.createElement("h3");
-      title.className = "audio-item-title";
-      var num = document.createElement("span");
-      num.className = "audio-item-num";
-      num.textContent = (index + 1 < 10 ? "0" : "") + (index + 1) + ".";
-      title.appendChild(num);
-      title.appendChild(document.createTextNode(" " + track.title));
+    function render(mode) {
+      var savedSeek = "0";
+      if (activeIndex >= 0 && rows[activeIndex]) {
+        savedSeek = rows[activeIndex].seek.value;
+      }
 
-      var player = document.createElement("div");
-      player.className = "audio-player";
+      playlist = sortTracks(mode);
+      list.innerHTML = "";
+      rows = [];
 
-      var playBtn = document.createElement("button");
-      playBtn.type = "button";
-      playBtn.className = "audio-play";
-      playBtn.setAttribute("aria-label", "Play " + track.title);
-      playBtn.innerHTML = ICON_PLAY;
+      playlist.forEach(function (track, index) {
+        var item = document.createElement("li");
+        item.className = "audio-item";
+        item.dataset.index = String(index);
+        item.dataset.trackId = String(track.id);
 
-      var seek = document.createElement("input");
-      seek.type = "range";
-      seek.className = "audio-seek";
-      seek.min = "0";
-      seek.max = "1000";
-      seek.value = "0";
-      seek.step = "1";
-      seek.setAttribute("aria-label", "Seek " + track.title);
+        var title = document.createElement("h3");
+        title.className = "audio-item-title";
+        var num = document.createElement("span");
+        num.className = "audio-item-num";
+        num.textContent = (index + 1 < 10 ? "0" : "") + (index + 1) + ".";
+        title.appendChild(num);
+        title.appendChild(document.createTextNode(" " + track.title));
 
-      var time = document.createElement("span");
-      time.className = "audio-time";
-      time.textContent = "0:00 / " + formatAudioTime(track.duration || 0);
+        var player = document.createElement("div");
+        player.className = "audio-player";
 
-      var muteBtn = document.createElement("button");
-      muteBtn.type = "button";
-      muteBtn.className = "audio-mute";
-      muteBtn.setAttribute("aria-label", "Mute");
-      muteBtn.innerHTML = ICON_VOL;
+        var playBtn = document.createElement("button");
+        playBtn.type = "button";
+        playBtn.className = "audio-play";
+        playBtn.setAttribute("aria-label", "Play " + track.title);
+        playBtn.innerHTML = ICON_PLAY;
 
-      player.appendChild(playBtn);
-      player.appendChild(seek);
-      player.appendChild(time);
-      player.appendChild(muteBtn);
-      item.appendChild(title);
-      item.appendChild(player);
-      list.appendChild(item);
+        var seek = document.createElement("input");
+        seek.type = "range";
+        seek.className = "audio-seek";
+        seek.min = "0";
+        seek.max = "1000";
+        seek.value = "0";
+        seek.step = "1";
+        seek.setAttribute("aria-label", "Seek " + track.title);
 
-      rows.push({
-        track: track,
-        item: item,
-        playBtn: playBtn,
-        seek: seek,
-        time: time,
-        muteBtn: muteBtn
+        var time = document.createElement("span");
+        time.className = "audio-time";
+        time.textContent = "0:00 / " + formatAudioTime(track.duration || 0);
+
+        var muteBtn = document.createElement("button");
+        muteBtn.type = "button";
+        muteBtn.className = "audio-mute";
+        muteBtn.setAttribute("aria-label", muted ? "Unmute" : "Mute");
+        muteBtn.innerHTML = muted ? ICON_MUTE : ICON_VOL;
+
+        player.appendChild(playBtn);
+        player.appendChild(seek);
+        player.appendChild(time);
+        player.appendChild(muteBtn);
+        item.appendChild(title);
+        item.appendChild(player);
+        list.appendChild(item);
+
+        rows.push({
+          track: track,
+          item: item,
+          playBtn: playBtn,
+          seek: seek,
+          time: time,
+          muteBtn: muteBtn
+        });
+
+        playBtn.addEventListener("click", function () {
+          toggleTrack(index);
+        });
+
+        seek.addEventListener("pointerdown", function () {
+          seekDragging = true;
+        });
+        seek.addEventListener("pointerup", function () {
+          commitSeek(index);
+        });
+        seek.addEventListener("change", function () {
+          commitSeek(index);
+        });
+        muteBtn.addEventListener("click", function () {
+          toggleMute();
+        });
       });
 
-      playBtn.addEventListener("click", function () {
-        toggleTrack(index);
-      });
-
-      seek.addEventListener("pointerdown", function () {
-        seekDragging = true;
-      });
-      seek.addEventListener("pointerup", function () {
-        commitSeek(index);
-      });
-      seek.addEventListener("change", function () {
-        commitSeek(index);
-      });
-      muteBtn.addEventListener("click", function () {
-        toggleMute();
-      });
-    });
+      if (activeTrackId != null) {
+        activeIndex = -1;
+        for (var i = 0; i < playlist.length; i += 1) {
+          if (playlist[i].id === activeTrackId) {
+            activeIndex = i;
+            break;
+          }
+        }
+        if (activeIndex >= 0) {
+          rows[activeIndex].seek.value = savedSeek;
+          updateTimeDisplay(activeIndex, lastPositionMs, durationMs);
+          setRowPlaying(activeIndex, playing);
+        }
+      }
+    }
 
     function commitSeek(index) {
       seekDragging = false;
@@ -267,7 +328,7 @@
     }
 
     function bindWidget() {
-      if (!window.SC || !window.SC.Widget) return false;
+      if (!iframe || !window.SC || !window.SC.Widget) return false;
       if (widget) return true;
       widget = window.SC.Widget(iframe);
       widget.bind(window.SC.Widget.Events.READY, function () {
@@ -286,6 +347,7 @@
       });
       widget.bind(window.SC.Widget.Events.FINISH, function () {
         playing = false;
+        lastPositionMs = 0;
         setRowPlaying(activeIndex, false);
         if (activeIndex >= 0) {
           updateTimeDisplay(activeIndex, 0, durationMs);
@@ -297,6 +359,7 @@
         if (data.relativePosition) {
           durationMs = data.currentPosition / data.relativePosition;
         }
+        lastPositionMs = data.currentPosition || 0;
         updateTimeDisplay(activeIndex, data.currentPosition, durationMs);
       });
       return true;
@@ -318,11 +381,13 @@
     }
 
     function playIndex(index) {
-      var track = tracks[index];
+      var track = playlist[index];
       if (!track || !widget) return;
 
       document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
       activeIndex = index;
+      activeTrackId = track.id;
+      lastPositionMs = 0;
       setRowLoading(index, true);
       setRowPlaying(index, false);
 
@@ -377,6 +442,15 @@
         }
       }
     });
+
+    if (sortSelect) {
+      sortSelect.addEventListener("change", function () {
+        render(sortSelect.value);
+      });
+      render(sortSelect.value || "newest");
+    } else {
+      render("newest");
+    }
 
     ensureWidget(function () {});
   }
