@@ -45,6 +45,27 @@
     { id: "Ws9e_YQHNvA", title: "Richard Strauss: Andante in C major, TrV 155", uploaded: "20260531", views: 146, likes: 0, duration: 271 }
   ];
 
+  /* SoundCloud track ids from https://soundcloud.com/horncalls
+     Titles are shortened for the on-site list; urls are the public permalinks. */
+  var audioTracks = [
+    { id: 2206646511, title: "Sergei Rachmaninoff: Vocalise, Op. 34 No. 14", url: "https://soundcloud.com/horncalls/sergei-rachmaninoff-vocalise-op-34-no-14-trevor-nuckols-horn-linda-avery-piano-4", duration: 369 },
+    { id: 2206646507, title: "Franz Strauss: Nocturno, Op. 7", url: "https://soundcloud.com/horncalls/franz-strauss-nocturno-op-7-trevor-nuckols-horn-linda-avery-horn-live-8", duration: 305 },
+    { id: 2206646503, title: "Reinhold Glière: Romance, Op. 35 No. 6", url: "https://soundcloud.com/horncalls/reinhold-gliere-romance-op-35-no-6-trevor-nuckols-horn-linda-avery-piano-9", duration: 202 },
+    { id: 2206646499, title: "Bach / Gounod: Ave Maria", url: "https://soundcloud.com/horncalls/bach-gounod-ave-maria-trevor-nuckols-horn-linda-avery-piano-3", duration: 316 },
+    { id: 2206646495, title: "Camille Saint-Saëns: Romance, Op. 36", url: "https://soundcloud.com/horncalls/camille-saint-saens-romance-op-36-trevor-nuckols-horn-linda-avery-piano-live-2", duration: 210 },
+    { id: 2206646491, title: "Richard Strauss: Andante in C major, TrV 155", url: "https://soundcloud.com/horncalls/richard-strauss-andante-in-c-major-trv-155-trevor-nuckols-horn-linda-avery-piano-live-6", duration: 249 },
+    { id: 2206646487, title: "Carl Reinecke: Notturno, Op. 112", url: "https://soundcloud.com/horncalls/carl-reinecke-notturno-op-112-trevor-nuckols-horn-linda-avery-piano-7", duration: 267 },
+    { id: 2206646483, title: "Camille Saint-Saëns: The Swan (Le Cygne)", url: "https://soundcloud.com/horncalls/camille-saint-saens-the-swan-le-cygne-trevor-nuckols-horn-linda-avery-piano-1", duration: 163 },
+    { id: 2206646479, title: "Reinhold Glière: Valse triste, Op. 35 No. 7", url: "https://soundcloud.com/horncalls/reinhold-gliere-valse-triste-op-35-no-7-trevor-nuckols-horn-linda-avery-piano-5", duration: 169 },
+    { id: 1795383964, title: "Edgard Varèse: Octandre", url: "https://soundcloud.com/horncalls/vareseoctandre", duration: 484 },
+    { id: 1795369417, title: "Samuel Barber: Summer Music, Op. 31", url: "https://soundcloud.com/horncalls/barbersummermusic", duration: 770 },
+    { id: 1795365436, title: "Mozart: Serenade in E-flat major, K. 375", url: "https://soundcloud.com/horncalls/mozartserenade375", duration: 1462 },
+    { id: 1794749227, title: "Michael Kamen: Theme from Band of Brothers", url: "https://soundcloud.com/horncalls/bandofbrothers", duration: 141 },
+    { id: 1794736618, title: "Andrew Lloyd Webber: Requiem — Pie Jesu", url: "https://soundcloud.com/horncalls/andrewlloydwebberpiejesu", duration: 132 },
+    { id: 1794672628, title: "Oliver Knussen: Horn Concerto, Op. 28 (NY Premiere)", url: "https://soundcloud.com/horncalls/knussenhornconcerto", duration: 796 },
+    { id: 1794631855, title: "Nicolas-Charles Bochsa: Fantasie, Op. 72 — Andante sostenuto", url: "https://soundcloud.com/horncalls/bochsafantasie", duration: 382 }
+  ];
+
   watchVideos.forEach(function (video, index) {
     video.order = index;
   });
@@ -78,7 +99,311 @@
   }
 
   initLightbox();
+  initWatchTabs();
   initWatchGallery(watchVideos);
+  initAudioPlaylist(audioTracks);
+
+  function initWatchTabs() {
+    var tabs = document.querySelectorAll("[data-watch-tab]");
+    var panels = document.querySelectorAll("[data-watch-panel]");
+    if (!tabs.length || !panels.length) return;
+
+    function activate(name) {
+      tabs.forEach(function (tab) {
+        var on = tab.getAttribute("data-watch-tab") === name;
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (panel) {
+        var on = panel.getAttribute("data-watch-panel") === name;
+        panel.hidden = !on;
+      });
+      if (name === "audio") {
+        document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
+      }
+      if (name === "video") {
+        document.dispatchEvent(new CustomEvent("horncalls:pause-audio"));
+      }
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        activate(tab.getAttribute("data-watch-tab"));
+      });
+      tab.addEventListener("keydown", function (event) {
+        var keys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+        if (keys.indexOf(event.key) === -1) return;
+        event.preventDefault();
+        var list = Array.prototype.slice.call(tabs);
+        var index = list.indexOf(tab);
+        var next = index;
+        if (event.key === "ArrowRight") next = (index + 1) % list.length;
+        if (event.key === "ArrowLeft") next = (index - 1 + list.length) % list.length;
+        if (event.key === "Home") next = 0;
+        if (event.key === "End") next = list.length - 1;
+        list[next].focus();
+        activate(list[next].getAttribute("data-watch-tab"));
+      });
+    });
+  }
+
+  function formatAudioTime(seconds) {
+    seconds = Math.max(0, Math.floor(seconds || 0));
+    var m = Math.floor(seconds / 60);
+    var s = seconds % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function initAudioPlaylist(tracks) {
+    var list = document.getElementById("audio-list");
+    var iframe = document.getElementById("sc-widget");
+    if (!list || !iframe || !tracks.length) return;
+
+    var ICON_PLAY =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    var ICON_PAUSE =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+    var ICON_VOL =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a3.5 3.5 0 0 0-1.8-3.1v6.2A3.5 3.5 0 0 0 16.5 12zm0-7.2v2.1a5.5 5.5 0 0 1 0 10.2v2.1a7.5 7.5 0 0 0 0-14.4z"/></svg>';
+    var ICON_MUTE =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 12a3.5 3.5 0 0 0-1.8-3.1v2.3l1.7 1.7c.07-.29.1-.59.1-.9zm3.0-7.2v2.1c1.2 1.3 1.9 3 1.9 5.1s-.7 3.8-1.9 5.1v2.1a7.5 7.5 0 0 0 0-14.4zM4.3 3 3 4.3 7.7 9H3v4h4l5 5v-6.7l4.7 4.7c-.5.4-1.1.7-1.7.9v2.1c1 .3 2.1.4 3.2.2l2.5 2.5 1.3-1.3L4.3 3zM14 3.7v2.1l-1.9 1.9V3.7L14 3.7z"/></svg>';
+
+    var rows = [];
+    var widget = null;
+    var widgetReady = false;
+    var activeIndex = -1;
+    var playing = false;
+    var muted = false;
+    var durationMs = 0;
+    var seekDragging = false;
+
+    tracks.forEach(function (track, index) {
+      var item = document.createElement("li");
+      item.className = "audio-item";
+      item.dataset.index = String(index);
+
+      var title = document.createElement("h3");
+      title.className = "audio-item-title";
+      var num = document.createElement("span");
+      num.className = "audio-item-num";
+      num.textContent = (index + 1 < 10 ? "0" : "") + (index + 1) + ".";
+      title.appendChild(num);
+      title.appendChild(document.createTextNode(" " + track.title));
+
+      var player = document.createElement("div");
+      player.className = "audio-player";
+
+      var playBtn = document.createElement("button");
+      playBtn.type = "button";
+      playBtn.className = "audio-play";
+      playBtn.setAttribute("aria-label", "Play " + track.title);
+      playBtn.innerHTML = ICON_PLAY;
+
+      var seek = document.createElement("input");
+      seek.type = "range";
+      seek.className = "audio-seek";
+      seek.min = "0";
+      seek.max = "1000";
+      seek.value = "0";
+      seek.step = "1";
+      seek.setAttribute("aria-label", "Seek " + track.title);
+
+      var time = document.createElement("span");
+      time.className = "audio-time";
+      time.textContent = "0:00 / " + formatAudioTime(track.duration || 0);
+
+      var muteBtn = document.createElement("button");
+      muteBtn.type = "button";
+      muteBtn.className = "audio-mute";
+      muteBtn.setAttribute("aria-label", "Mute");
+      muteBtn.innerHTML = ICON_VOL;
+
+      player.appendChild(playBtn);
+      player.appendChild(seek);
+      player.appendChild(time);
+      player.appendChild(muteBtn);
+      item.appendChild(title);
+      item.appendChild(player);
+      list.appendChild(item);
+
+      rows.push({
+        track: track,
+        item: item,
+        playBtn: playBtn,
+        seek: seek,
+        time: time,
+        muteBtn: muteBtn
+      });
+
+      playBtn.addEventListener("click", function () {
+        toggleTrack(index);
+      });
+
+      seek.addEventListener("pointerdown", function () {
+        seekDragging = true;
+      });
+      seek.addEventListener("pointerup", function () {
+        commitSeek(index);
+      });
+      seek.addEventListener("change", function () {
+        commitSeek(index);
+      });
+      muteBtn.addEventListener("click", function () {
+        toggleMute();
+      });
+    });
+
+    function commitSeek(index) {
+      seekDragging = false;
+      if (index !== activeIndex || !widget || !widgetReady || !durationMs) return;
+      var ratio = Number(rows[index].seek.value) / 1000;
+      widget.seekTo(Math.floor(durationMs * ratio));
+    }
+
+    function setRowPlaying(index, isPlaying) {
+      rows.forEach(function (row, i) {
+        var on = i === index && isPlaying;
+        row.item.classList.toggle("is-playing", on);
+        row.playBtn.innerHTML = on ? ICON_PAUSE : ICON_PLAY;
+        row.playBtn.setAttribute(
+          "aria-label",
+          (on ? "Pause " : "Play ") + row.track.title
+        );
+      });
+    }
+
+    function setRowLoading(index, loading) {
+      rows.forEach(function (row, i) {
+        row.item.classList.toggle("is-loading", i === index && loading);
+      });
+    }
+
+    function updateTimeDisplay(index, positionMs, totalMs) {
+      var row = rows[index];
+      if (!row) return;
+      var total = totalMs || (row.track.duration || 0) * 1000;
+      row.time.textContent =
+        formatAudioTime(positionMs / 1000) + " / " + formatAudioTime(total / 1000);
+      if (!seekDragging && total > 0) {
+        row.seek.value = String(Math.round((positionMs / total) * 1000));
+      }
+    }
+
+    function bindWidget() {
+      if (!window.SC || !window.SC.Widget) return false;
+      if (widget) return true;
+      widget = window.SC.Widget(iframe);
+      widget.bind(window.SC.Widget.Events.READY, function () {
+        widgetReady = true;
+        widget.setVolume(muted ? 0 : 100);
+      });
+      widget.bind(window.SC.Widget.Events.PLAY, function () {
+        playing = true;
+        setRowLoading(activeIndex, false);
+        setRowPlaying(activeIndex, true);
+        document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
+      });
+      widget.bind(window.SC.Widget.Events.PAUSE, function () {
+        playing = false;
+        setRowPlaying(activeIndex, false);
+      });
+      widget.bind(window.SC.Widget.Events.FINISH, function () {
+        playing = false;
+        setRowPlaying(activeIndex, false);
+        if (activeIndex >= 0) {
+          updateTimeDisplay(activeIndex, 0, durationMs);
+          rows[activeIndex].seek.value = "0";
+        }
+      });
+      widget.bind(window.SC.Widget.Events.PLAY_PROGRESS, function (data) {
+        if (activeIndex < 0) return;
+        if (data.relativePosition) {
+          durationMs = data.currentPosition / data.relativePosition;
+        }
+        updateTimeDisplay(activeIndex, data.currentPosition, durationMs);
+      });
+      return true;
+    }
+
+    function ensureWidget(callback) {
+      if (bindWidget()) {
+        callback();
+        return;
+      }
+      var tries = 0;
+      var timer = window.setInterval(function () {
+        tries += 1;
+        if (bindWidget() || tries > 50) {
+          window.clearInterval(timer);
+          callback();
+        }
+      }, 100);
+    }
+
+    function playIndex(index) {
+      var track = tracks[index];
+      if (!track || !widget) return;
+
+      document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
+      activeIndex = index;
+      setRowLoading(index, true);
+      setRowPlaying(index, false);
+
+      widget.load(track.url, {
+        auto_play: true,
+        callback: function () {
+          widgetReady = true;
+          setRowLoading(index, false);
+          widget.getDuration(function (ms) {
+            durationMs = ms || (track.duration || 0) * 1000;
+            updateTimeDisplay(index, 0, durationMs);
+          });
+          widget.setVolume(muted ? 0 : 100);
+          widget.play();
+        }
+      });
+    }
+
+    function toggleTrack(index) {
+      ensureWidget(function () {
+        if (!widget) return;
+        if (index === activeIndex && playing) {
+          widget.pause();
+          return;
+        }
+        if (index === activeIndex && !playing) {
+          document.dispatchEvent(new CustomEvent("horncalls:pause-watch"));
+          widget.play();
+          return;
+        }
+        playIndex(index);
+      });
+    }
+
+    function toggleMute() {
+      muted = !muted;
+      rows.forEach(function (row) {
+        row.muteBtn.innerHTML = muted ? ICON_MUTE : ICON_VOL;
+        row.muteBtn.setAttribute("aria-label", muted ? "Unmute" : "Mute");
+      });
+      if (widget && widgetReady) {
+        widget.setVolume(muted ? 0 : 100);
+      }
+    }
+
+    document.addEventListener("horncalls:pause-audio", function () {
+      if (widget && playing) {
+        try {
+          widget.pause();
+        } catch (err) {
+          /* ignore */
+        }
+      }
+    });
+
+    ensureWidget(function () {});
+  }
 
   function initLightbox() {
     var lightbox = document.getElementById("lightbox");
@@ -144,6 +469,21 @@
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     loadSharedVolume();
+
+    document.addEventListener("horncalls:pause-watch", function () {
+      players.forEach(function (player) {
+        if (player && typeof player.pauseVideo === "function") {
+          try {
+            player.pauseVideo();
+          } catch (err) {
+            /* ignore */
+          }
+        }
+      });
+      stopVolumePoll();
+      activePlayerIndex = -1;
+      setPlayingControls(-1);
+    });
 
     function loadSharedVolume() {
       try {

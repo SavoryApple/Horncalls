@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=21">
+  <link rel="stylesheet" href="css/styles.css?v=29">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -132,17 +132,80 @@
         <div class="section-head">
           <h2>Watch &amp; Listen</h2>
         </div>
-        <div class="watch-toolbar">
-          <label class="watch-sort-label" for="watch-sort">Sort by</label>
-          <select id="watch-sort" class="watch-sort" name="watch-sort">
-            <option value="listed">Playlist order</option>
-            <option value="newest">Newest uploads</option>
-            <option value="oldest">Oldest uploads</option>
-            <option value="views" selected>Most viewed</option>
-            <option value="likes">Most liked</option>
-          </select>
+
+        <div class="watch-tabs" role="tablist" aria-label="Watch or listen">
+          <button
+            type="button"
+            class="watch-tab is-active"
+            role="tab"
+            id="watch-tab-audio"
+            aria-selected="true"
+            aria-controls="watch-panel-audio"
+            data-watch-tab="audio"
+          >
+            Audio
+          </button>
+          <button
+            type="button"
+            class="watch-tab"
+            role="tab"
+            id="watch-tab-video"
+            aria-selected="false"
+            aria-controls="watch-panel-video"
+            data-watch-tab="video"
+            tabindex="-1"
+          >
+            Video
+          </button>
         </div>
-        <div id="watch-grid" class="watch-grid" aria-live="polite"></div>
+
+        <div
+          class="watch-panel"
+          id="watch-panel-audio"
+          role="tabpanel"
+          aria-labelledby="watch-tab-audio"
+          data-watch-panel="audio"
+        >
+          <ol id="audio-list" class="audio-list" aria-label="Recordings"></ol>
+          <div class="audio-widget-host" aria-hidden="true">
+            <iframe
+              id="sc-widget"
+              title="SoundCloud player"
+              width="100%"
+              height="20"
+              scrolling="no"
+              frameborder="no"
+              allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F2206646511&amp;color=%23C7A968&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false&amp;download=false&amp;sharing=false"
+            ></iframe>
+          </div>
+          <p class="watch-audio-note">
+            <a href="https://soundcloud.com/horncalls" target="_blank" rel="noopener noreferrer">Open on SoundCloud</a>
+          </p>
+        </div>
+
+        <div
+          class="watch-panel"
+          id="watch-panel-video"
+          role="tabpanel"
+          aria-labelledby="watch-tab-video"
+          data-watch-panel="video"
+          hidden
+        >
+          <div class="watch-toolbar">
+            <div class="watch-sort-group">
+              <label class="watch-sort-label" for="watch-sort">Sort by</label>
+              <select id="watch-sort" class="watch-sort" name="watch-sort">
+                <option value="listed">Playlist order</option>
+                <option value="newest">Newest uploads</option>
+                <option value="oldest">Oldest uploads</option>
+                <option value="views" selected>Most viewed</option>
+                <option value="likes">Most liked</option>
+              </select>
+            </div>
+          </div>
+          <div id="watch-grid" class="watch-grid" aria-live="polite"></div>
+        </div>
       </div>
     </section>
 
@@ -164,6 +227,7 @@
     <p class="copy">&copy; <span id="year"></span> Trevor Nuckols</p>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="https://w.soundcloud.com/player/api.js" defer></script>
+  <script src="js/main.js?v=25" defer></script>
 </body>
 </html>
