@@ -381,7 +381,7 @@ nav a:hover {
 
 .quote-band blockquote {
   font-family: "Cormorant Garamond", serif;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   font-size: clamp(1.25rem, 3.2vw, 2.05rem);
   max-width: 26ch;
@@ -392,7 +392,7 @@ nav a:hover {
 
 .quote-band cite {
   font-family: "Outfit", sans-serif;
-  font-style: normal;
+  font-style: italic;
   font-size: 11.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
